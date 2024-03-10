@@ -8,7 +8,7 @@ export function ContainerAuth({ children }: any) {
                 <div className='flex flex-col w-full h-full min-h-[700px] justify-center items-center p-8'>
                     <div className='h-1/5 sm:h-1/4'></div>
                     {children}
-                    <Image className='h-1/2 mt-6 sm:h-1/3' src='/logo.svg' alt='Atos Capital Logo' width={150} height={25} />
+                    <Image className='h-1/2 mt-16 sm:h-1/3' src='/logo.svg' alt='Atos Capital Logo' width={150} height={25} />
                 </div>
                 <div className='flex w-full h-full min-h-[700px] '>
                     <div className='flex w-full h-full relative preserve-3d '>

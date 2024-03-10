@@ -55,25 +55,22 @@ export default function SignupForm() {
             </div>
 
             <Label className='text-sm font-medium'>Nome</Label>
-            <Input type='text' className='mt-1' placeholder='Informe seu nome...' {...register("name")}>
+            <Input type='text' className='mt-1 mb-4' placeholder='Informe seu nome...' {...register("name")}>
                 {errors.name && <>{errors.name.message}</>}
             </Input>
 
-            <div></div>
             <Label className='text-sm font-medium'>Email</Label>
-            <Input type='email' className='mt-1' placeholder='seuemail@email.com' {...register("email")}>
+            <Input type='email' className='mt-1 mb-4' placeholder='seuemail@email.com' {...register("email")}>
                 {errors.email && <>{errors.email.message}</>}
             </Input>
 
-            <div></div>
             <Label className='text-sm font-medium'>Senha</Label>
-            <Input type='password' className='mt-1' placeholder='Digite sua senha...' {...register("password")}>
+            <Input type='password' className='mt-1 mb-4' placeholder='Digite sua senha...' {...register("password")}>
                 {errors.password && <>{errors.password.message}</>}
             </Input>
 
-            <div></div>
             <Label className='text-sm font-medium'>Confirme sua senha</Label>
-            <Input type='password' className='mt-1' placeholder='Confirme sua senha...' {...register("confirmPassword")}>
+            <Input type='password' className='mt-1 mb-4' placeholder='Confirme sua senha...' {...register("confirmPassword")}>
                 {errors.confirmPassword && <>{errors.confirmPassword.message}</>}
             </Input>
 
