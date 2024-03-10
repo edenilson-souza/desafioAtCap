@@ -1,14 +1,33 @@
+"use strict";
+import AxiosAdapter from "../http/AxiosAdapter";
 import HttpClient from "../http/HttpClient";
-import AccountGateway from "./AccountGateway";
+import AccountGateway, { InputLogin, InputSignup, Output } from "./AccountGateway";
 
-export default class AccountGatewayHttp implements AccountGateway {
+export class AccountGatewayHttp implements AccountGateway {
+    httpClient: HttpClient = new AxiosAdapter();
 
-	constructor (readonly httpClient: HttpClient) {
-	}
+    baseUrl = "http://localhost:8000";
 
-	async signup(input: any): Promise<any> {
-		const output = await this.httpClient.post("http://localhost:3001/signup", input);
-		return output;
-	}
+    constructor() {}
 
+    async signup(input: InputSignup): Promise<Output> {
+        try {
+            const output = await this.httpClient.post(this.baseUrl, input);
+            return output;
+        } catch (error: any) {
+            throw new Error("Erro ao cadastrar usuário");
+        }
+    }
+
+    async login(input: InputLogin): Promise<Output> {
+        try {
+            const output = await this.httpClient.post(this.baseUrl, input);
+            return output;
+        } catch (error) {
+            throw new Error("Erro ao logar usuário");
+        }
+    }
 }
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default new AccountGatewayHttp();

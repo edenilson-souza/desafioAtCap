@@ -5,6 +5,7 @@ import Divider from "../basic/divider";
 import Input from "../basic/input";
 import Label from "../basic/label";
 import { useState } from "react";
+import AccountGatewayHttp from "@/infra/gateway/AccountGatewayHttp";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -15,6 +16,8 @@ export default function LoginForm() {
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
+
+        AccountGatewayHttp.login({ email, password });
         // navigate("/");
     };
 

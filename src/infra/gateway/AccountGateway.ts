@@ -1,13 +1,19 @@
 export default interface AccountGateway {
-    signup(input: Input): Promise<Output>;
+    signup(input: InputSignup): Promise<Output>;
+    login(input: InputLogin): Promise<Output>;
 }
 
-export type Input = {
+export type InputSignup = {
     name: string;
     email: string;
     password: string;
 };
 
+export type InputLogin = {
+    email: string;
+    password: string;
+};
+
 export type Output = {
-    accountId: string;
+    access_token: string;
 };
