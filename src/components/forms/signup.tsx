@@ -17,8 +17,8 @@ import Loading from "@/components/basic/loading";
 const schema = z.object({
     name: z.string().min(3, "Digite no mínimo 3 caracteres").max(50),
     email: z.string().email("Digite um e-mail válido"),
-    password: z.string().min(8, "Digite no mínimo 8 caracteres").max(50),
-    confirmPassword: z.string().min(8, "Digite no mínimo 8 caracteres").max(50)
+    password: z.string().min(4, "Digite no mínimo 4 caracteres").max(50),
+    confirmPassword: z.string().min(4, "Digite no mínimo 4 caracteres").max(50)
 });
 
 export default function SignupForm() {
@@ -34,14 +34,13 @@ export default function SignupForm() {
     const onSubmit = async (data: any) => {
         try {
             setLoading(true);
-            // const signup = SignupDomain.create(data);
-            // const result = await AccountGatewayHttp.signup(signup.getData());
-            // if (result) {
-            //     notify("Usuário cadastrado com sucesso");
-            //     navigate("/login");
-            // }
-            navigate("/login");
-            setLoading(false);
+            const signup = SignupDomain.create(data);
+            const result = await AccountGatewayHttp.signup(signup.getData());
+            if (result) {
+                notify("Usuário cadastrado com sucesso");
+                setLoading(false);
+                navigate("/dashboard");
+            }
         } catch (error: any) {
             setLoading(false);
             notify(error.message, { type: "error", position: "bottom-center" });
@@ -82,6 +81,13 @@ export default function SignupForm() {
                     Cadastrar
                 </Button>
             )}
+
+            <Label className='text-sm font-medium mt-6 text-[#313957]'>
+                Já possui uma conta?{" "}
+                <a href='/login' className='text-[#3F82F8]'>
+                    Faça login
+                </a>
+            </Label>
         </div>
     );
 }

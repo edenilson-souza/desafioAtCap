@@ -1,4 +1,4 @@
-"use strict";
+"use client";
 import AxiosAdapter from "../http/AxiosAdapter";
 import HttpClient from "../http/HttpClient";
 import AccountGateway, { InputLogin, InputSignup, Output } from "./AccountGateway";
@@ -12,7 +12,8 @@ export class AccountGatewayHttp implements AccountGateway {
 
     async signup(input: InputSignup): Promise<Output> {
         try {
-            const output = await this.httpClient.post(this.baseUrl, input);
+            const output = await this.httpClient.post(`${this.baseUrl}/auth/register`, input);
+            localStorage.setItem("token", output.access_token);
             return output;
         } catch (error: any) {
             throw new Error("Erro ao cadastrar usuário");
@@ -21,7 +22,8 @@ export class AccountGatewayHttp implements AccountGateway {
 
     async login(input: InputLogin): Promise<Output> {
         try {
-            const output = await this.httpClient.post(this.baseUrl, input);
+            const output = await this.httpClient.post(`${this.baseUrl}/auth/login`, input);
+            localStorage.setItem("token", output.access_token);
             return output;
         } catch (error) {
             throw new Error("Erro ao logar usuário");

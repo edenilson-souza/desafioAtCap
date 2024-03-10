@@ -15,7 +15,7 @@ import Loading from "../basic/loading";
 
 const schema = z.object({
     email: z.string().email("Digite um e-mail válido"),
-    password: z.string().min(8, "Digite no mínimo 8 caracteres").max(50)
+    password: z.string().min(4, "Digite no mínimo 4 caracteres").max(50)
 });
 
 export default function LoginForm() {
@@ -34,9 +34,9 @@ export default function LoginForm() {
             const login = LoginDomain.create(data);
             const result = await AccountGatewayHttp.login(login.getData());
             if (result) {
-                navigate("/");
+                setLoading(false);
+                navigate("/dashboard");
             }
-            setLoading(false);
         } catch (error: any) {
             setLoading(false);
             notify(error.message, { type: "error", position: "bottom-center" });
