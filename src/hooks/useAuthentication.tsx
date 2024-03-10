@@ -1,6 +1,4 @@
-// hooks/useAuthentication.js
 import { useState, useEffect } from "react";
-import Router from "next/router";
 import { navigate } from "@/lib/actions";
 import { notify } from "@/lib/utils";
 
@@ -8,7 +6,6 @@ const useAuthentication = () => {
     const [authenticated, setAuthenticated] = useState(false);
 
     useEffect(() => {
-        // Verifique se o usuário está autenticado ao carregar a página
         const checkAuthentication = () => {
             const token = localStorage.getItem("token");
             if (token) {

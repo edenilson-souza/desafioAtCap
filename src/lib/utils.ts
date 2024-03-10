@@ -12,3 +12,6 @@ export const isAuthenticated = () => {
     const token = localStorage.getItem("token");
     return token;
 };
+
+export const base_url_api = "http://localhost:3000";
+export const base_url_auth = "http://localhost:8000";

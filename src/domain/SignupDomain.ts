@@ -6,7 +6,7 @@ export default class SignupDomain {
 
     private constructor(name: string, email: string, password: string, confirmPassword: string) {
         this.name = name;
-        this.email = email;
+        this.email = email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) ? email : "";
         this.password = password;
         this.confirmPassword = confirmPassword;
     }

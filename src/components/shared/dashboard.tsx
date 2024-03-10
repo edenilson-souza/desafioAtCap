@@ -6,18 +6,16 @@ export function DashboardPage({ children, buttonOrClose }: any) {
     return (
         <Container className='flex flex-row'>
             <SideMenu />
-            <div className='flex flex-col w-full h-full'>
+            <div className='flex flex-col w-full h-[100%] relative'>
                 <Header />
                 <Content>
-                    <div className='w-full h-full px-14 py-10'>
-                        <div className='flex flex-row w-full justify-between'>
+                    <div className='flex flex-col w-full h-[100%] relative'>
+                        <div className='flex flex-row w-full justify-between px-14 py-10 '>
                             <BemVindo />
                             {buttonOrClose}
                         </div>
 
-                        <div className='flex items-center mt-8'>
-                            <div className='flex-1 border-t border-gray-200'>{children}</div>
-                        </div>
+                        <div className='block items-center px-14 py-6 no-scrollbar overflow-y-auto border-t  border-gray-20'>{children}</div>
                     </div>
                 </Content>
             </div>

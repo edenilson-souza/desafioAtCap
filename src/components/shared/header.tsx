@@ -4,7 +4,7 @@ import Image from "next/image";
 export function Header() {
     const auth = useAuthentication();
     return (
-        <div className='flex items-center justify-between w-full h-20 border-y-2 px-9'>
+        <div className='flex relative items-center justify-between w-full h-20 border-y-2 px-9'>
             <div className='flex items-center ml-10'>
                 <SearchInput></SearchInput>
             </div>

@@ -4,7 +4,7 @@ import Logo from "../basic/logo";
 import Image from "next/image";
 
 export function Content({ children }: any) {
-    return <div className='flex flex-col w-full h-full bg-[#F9F9F9]'>{children}</div>;
+    return <div className='flex flex-col relative w-full h-[100%] bg-[#F9F9F9]'>{children}</div>;
 }
 
 export function SideMenu() {

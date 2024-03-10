@@ -6,9 +6,12 @@ import Container from "@/components/basic/container";
 import Loading from "@/components/basic/loading";
 import { DashboardPage } from "@/components/shared/dashboard";
 import Button from "@/components/basic/button";
+import ProductsList from "@/components/feature/productsList";
+import { useState } from "react";
 
 export default function Dashboard() {
     const auth = useAuthentication();
+    const [totalCount, setTotalCount] = useState(0);
 
     const openCadastro = () => {
         navigateToCadastro();
@@ -27,9 +30,18 @@ export default function Dashboard() {
     return (
         <>
             <DashboardPage buttonOrClose={<NovoProdutoButton openCadastro={openCadastro}></NovoProdutoButton>}>
-                <h1>1</h1>
+                <ViewHeaderCadastrados totalCount={totalCount}></ViewHeaderCadastrados>
+                <ProductsList setTotalCount={(total: number) => setTotalCount(total)}></ProductsList>
             </DashboardPage>
         </>
+    );
+}
+
+export function ViewHeaderCadastrados({ totalCount }: { totalCount: number }) {
+    return (
+        <div>
+            <h3 className='font-[Poppins] text-xl font-extrabold my-2'>Seus cadastros</h3>
+        </div>
     );
 }
 

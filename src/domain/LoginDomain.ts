@@ -3,7 +3,7 @@ export default class LoginDomain {
     password = "";
 
     private constructor(email: string, password: string) {
-        this.email = email;
+        this.email = email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) ? email : "";
         this.password = password;
     }
 
