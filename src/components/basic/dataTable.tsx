@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function DataTable({ data, columns }: any) {
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(5);
 
     const onPageChange = (page: number) => {
         setCurrentPage(page);

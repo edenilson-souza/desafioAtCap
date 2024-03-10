@@ -8,10 +8,12 @@ import { DashboardPage } from "@/components/shared/dashboard";
 import Button from "@/components/basic/button";
 import ProductsList from "@/components/feature/productsList";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Dashboard() {
     const auth = useAuthentication();
     const [totalCount, setTotalCount] = useState(0);
+    const [lastUpdate, setLastUpdate] = useState(new Date());
 
     const openCadastro = () => {
         navigateToCadastro();
@@ -29,18 +31,43 @@ export default function Dashboard() {
 
     return (
         <>
-            <DashboardPage buttonOrClose={<NovoProdutoButton openCadastro={openCadastro}></NovoProdutoButton>}>
-                <ViewHeaderCadastrados totalCount={totalCount}></ViewHeaderCadastrados>
-                <ProductsList setTotalCount={(total: number) => setTotalCount(total)}></ProductsList>
+            <DashboardPage buttonOrClose={<NovoProdutoButton openCadastro={openCadastro} />}>
+                <ViewHeaderCadastrados totalCount={totalCount} />
+                <div className='flex flex-row justify-between my-10'>
+                    <SearchInput />
+                    <div className='text-xs font-[Poppins] text-gray-400 '>
+                        Última atualização: {lastUpdate.toLocaleDateString()} às {lastUpdate.toLocaleTimeString()}
+                    </div>
+                </div>
+                <ProductsList setTotalCount={(total: number) => setTotalCount(total)} lastUpdate={(date: Date) => setLastUpdate(date)} />
             </DashboardPage>
         </>
     );
 }
 
+function SearchInput() {
+    return (
+        <div className='flex justify-between items-center  w-60 h-9  bg-white rounded-lg px-8'>
+            <input
+                type='text'
+                placeholder='Procurar...'
+                className=' h-[70%] w-[80%] bg-white placeholder-[#898989] placeholder-sx border-none focus:border-transparent focus:outline-none'
+            />
+            <Image src='/search.svg' alt='Profile' className='w-5 h-5 rounded-full' width={150} height={150} />
+        </div>
+    );
+}
+
 export function ViewHeaderCadastrados({ totalCount }: { totalCount: number }) {
     return (
-        <div>
+        <div className='flex flex-row justify-between p-1 items-center '>
             <h3 className='font-[Poppins] text-xl font-extrabold my-2'>Seus cadastros</h3>
+            <div className=' flex w-48 h-16 px-4 text-sm font-[Poppins] bg-white justify-around items-center rounded-xl'>
+                <div className='text-black text-2xl font-[Poppins] font-extrabold'>
+                    <div>{totalCount === 0 ? 0 : totalCount}</div>
+                </div>
+                Total de cadastros
+            </div>
         </div>
     );
 }

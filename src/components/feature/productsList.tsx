@@ -1,16 +1,15 @@
 import { base_url_api, notify } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import DataTable from "@/components/basic/dataTable";
-import Button from "../basic/button";
-
-import { Dialog, DialogTrigger, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../basic/dialog";
+import { Dialog, DialogTrigger, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/basic/dialog";
 import { Product } from "@/infra/gateway/ProductsGateway";
+import Button from "@/components/basic/button";
 
-export default function ProductsList({ setTotalCount }: { setTotalCount: (total: number) => void }) {
+export default function ProductsList({ setTotalCount, lastUpdate }: { setTotalCount: (total: number) => void; lastUpdate: (date: Date) => void }) {
     const [products, setProducts] = useState<Product[]>([]);
 
     const handleEdit = (id: string) => {
-        alert("Editar " + id);
+        alert("Editar id " + id);
     };
 
     const columns = {
@@ -27,6 +26,7 @@ export default function ProductsList({ setTotalCount }: { setTotalCount: (total:
         const data = await response.json();
         setTotalCount(data.length);
         setProducts(data);
+        lastUpdate(new Date());
     };
 
     useEffect(() => {
@@ -47,10 +47,9 @@ function Opcoes({ id, onEdit, onDelete }: { id: string; onEdit: (id: string) => 
     const handleDelete = async () => {
         try {
             // const response = await deleteAccount(id);
-            // setShowConfirm(false);
-            // notify(response.data.message);
-            // onDelete();
-            alert("Excluir: " + id);
+            notify("Deletado com sucesso");
+            onDelete();
+            setShowConfirm(false);
         } catch (error: any) {
             notify(error.message, { type: "error" });
         }
