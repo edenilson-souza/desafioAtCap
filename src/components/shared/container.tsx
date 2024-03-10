@@ -12,7 +12,7 @@ export function ContainerAuth({ children }: any) {
                 </div>
                 <div className='flex w-full h-full min-h-[700px] '>
                     <div className='flex w-full h-full relative preserve-3d '>
-                        <Image className='rounded-3xl' src='/login_image.svg' alt='Logo Image' fill={true} layout='fill' object-fit='cover' />
+                        <Image className='rounded-3xl' src='/login_art.svg' alt='Logo Image' fill={true} layout='fill' object-fit='cover' />
                     </div>
                 </div>
             </div>
