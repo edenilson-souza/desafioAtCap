@@ -1,4 +1,4 @@
-export default interface AccountGateway {
+export default interface ProductsGateway {
     getProducts(): Promise<Product[]>;
 }
 

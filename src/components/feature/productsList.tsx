@@ -4,6 +4,7 @@ import DataTable from "@/components/basic/dataTable";
 import { Dialog, DialogTrigger, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/basic/dialog";
 import { Product } from "@/infra/gateway/ProductsGateway";
 import Button from "@/components/basic/button";
+import ProductsGatewayHttp from "@/infra/gateway/ProductsGatewayHttp";
 
 export default function ProductsList({ setTotalCount, lastUpdate }: { setTotalCount: (total: number) => void; lastUpdate: (date: Date) => void }) {
     const [products, setProducts] = useState<Product[]>([]);
@@ -22,8 +23,9 @@ export default function ProductsList({ setTotalCount, lastUpdate }: { setTotalCo
     };
 
     const fetchProducts = async () => {
-        const response = await fetch(`${base_url_api}/products`);
-        const data = await response.json();
+        const data = await ProductsGatewayHttp.getProducts();
+
+        // const data = await response.json();
         setTotalCount(data.length);
         setProducts(data);
         lastUpdate(new Date());
