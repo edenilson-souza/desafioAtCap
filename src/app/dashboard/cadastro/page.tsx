@@ -1,17 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import useAuthentication from "@/hooks/useAuthentication";
-import { navigateToCadastro } from "@/lib/actions";
+import { navigateToDashboard } from "@/lib/actions";
 import Container from "@/components/basic/container";
 import Loading from "@/components/basic/loading";
 import { DashboardPage } from "@/components/shared/dashboard";
-import Button from "@/components/basic/button";
 
 export default function Dashboard() {
     const auth = useAuthentication();
 
-    const openCadastro = () => {
-        navigateToCadastro();
+    const closeCadastro = () => {
+        navigateToDashboard();
     };
 
     if (!auth.authenticated) {
@@ -26,19 +25,20 @@ export default function Dashboard() {
 
     return (
         <>
-            <DashboardPage buttonOrClose={<NovoProdutoButton openCadastro={openCadastro}></NovoProdutoButton>}>
-                <h1>1</h1>
+            <DashboardPage buttonOrClose={<Close onClick={closeCadastro}></Close>}>
+                <h1>2</h1>
             </DashboardPage>
         </>
     );
 }
 
-function NovoProdutoButton({ openCadastro }: { openCadastro: any }) {
+function Close({ onClick }: any) {
     return (
-        <>
-            <Button className='w-36 h-10 rounded-lg text-xs' onClick={openCadastro}>
-                + Novo Produto
-            </Button>
-        </>
+        <a className='text-xl text-[#898989] h-full flex justify-center items-center' onClick={onClick}>
+            <div className='flex relative w-10 h-10 justify-center items-center ml-4'>
+                <div className='absolute left-0 w-1/2 h-1 bg-slate-400 transform rotate-45 rounded-xl'></div>
+                <div className='absolute left-0 w-1/2 h-1 bg-slate-400 transform -rotate-45 rounded-xl'></div>
+            </div>
+        </a>
     );
 }

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Router from "next/router";
 import { navigate } from "@/lib/actions";
+import { notify } from "@/lib/utils";
 
 const useAuthentication = () => {
     const [authenticated, setAuthenticated] = useState(false);
@@ -14,6 +15,7 @@ const useAuthentication = () => {
                 setAuthenticated(true);
             } else {
                 setAuthenticated(false);
+                notify("Você precisa estar autenticado para acessar esta página", { type: "error", position: "bottom-center" });
                 navigate("/login");
             }
         };

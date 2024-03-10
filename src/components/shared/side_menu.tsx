@@ -1,3 +1,4 @@
+import { navigateToDashboard } from "@/lib/actions";
 import Button from "../basic/button";
 import Logo from "../basic/logo";
 import Image from "next/image";
@@ -26,7 +27,7 @@ export function SideMenu() {
 function ButtonMenu({ children }: { children?: any }) {
     return (
         <div className='flex mx-2 relative'>
-            <Button className='w-full h-12 bg-[#E9E9E9] text-black font-semibold text-left items-center justify-start' onClick={() => alert("click")}>
+            <Button className='w-full h-12 bg-[#E9E9E9] text-black font-semibold text-left items-center justify-start' onClick={navigateToDashboard}>
                 {children}
             </Button>
         </div>

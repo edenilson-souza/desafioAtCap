@@ -12,6 +12,7 @@ import { notify } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Loading from "../basic/loading";
+import Image from "next/image";
 
 const schema = z.object({
     email: z.string().email("Digite um e-mail válido"),
@@ -44,9 +45,9 @@ export default function LoginForm() {
     };
 
     return (
-        <div className='w-[300px] h-full max-h-[60%] sm:w-[300px]'>
+        <div className='w-[300px] h-full max-h-[60%] sm:w-[300px] mt-16'>
             <div className='flex flex-col sm:w-[280px]'>
-                <Label className='text-3xl font-["Poppins"] mb-8'>Olá! 👋</Label>
+                <Image className='mb-8' src={"/hand.png"} alt='Hand' width={100} height={100}></Image>
                 <Label className='text-xl font-["Poppins"] mb-8 text-[#313957]'>Faça login para começar a gerenciar seus produtos.</Label>
             </div>
 
