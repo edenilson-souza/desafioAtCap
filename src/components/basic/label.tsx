@@ -23,9 +23,9 @@ interface ContainerProps {
     className?: string;
 }
 
-function Label({ children, element = "a", className }: ContainerProps) {
+function Label({ children, element = "div", className }: ContainerProps) {
     const Component = element;
-    const baseStyled = ``;
+    const baseStyled = `text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`;
     return <Component className={cn(baseStyled, className)}>{children}</Component>;
 }
 

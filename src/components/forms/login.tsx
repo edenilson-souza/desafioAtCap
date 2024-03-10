@@ -1,4 +1,5 @@
 "use client";
+import * as z from "zod";
 import { navigate } from "@/lib/actions";
 import Button from "../basic/button";
 import Divider from "../basic/divider";
@@ -6,19 +7,40 @@ import Input from "../basic/input";
 import Label from "../basic/label";
 import { useState } from "react";
 import AccountGatewayHttp from "@/infra/gateway/AccountGatewayHttp";
+import LoginDomain from "@/domain/LoginDomain";
+import { notify } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import Loading from "../basic/loading";
+
+const schema = z.object({
+    email: z.string().email("Digite um e-mail válido"),
+    password: z.string().min(8, "Digite no mínimo 8 caracteres").max(50)
+});
 
 export default function LoginForm() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({
+        resolver: zodResolver(schema)
+    });
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-
-        AccountGatewayHttp.login({ email, password });
-        // navigate("/");
+    const onSubmit = async (data: any) => {
+        try {
+            setLoading(true);
+            const login = LoginDomain.create(data);
+            const result = await AccountGatewayHttp.login(login.getData());
+            if (result) {
+                navigate("/");
+            }
+            setLoading(false);
+        } catch (error: any) {
+            setLoading(false);
+            notify(error.message, { type: "error", position: "bottom-center" });
+        }
     };
 
     return (
@@ -27,12 +49,27 @@ export default function LoginForm() {
                 <Label className='text-3xl font-["Poppins"] mb-8'>Olá! 👋</Label>
                 <Label className='text-xl font-["Poppins"] mb-8 text-[#313957]'>Faça login para começar a gerenciar seus produtos.</Label>
             </div>
-            <Label className='text-sm font-medium'>Email</Label>
-            <Input type='email' className='mt-1 mb-4' placeholder='seuemail@email.com' onChange={handleEmailChange} value={email}></Input>
-            <Label className='text-sm font-medium'>Senha</Label>
-            <Input type='password' className='mt-1 mb-6' placeholder='Digite sua senha...' onChange={handlePasswordChange} value={password}></Input>
-            <Button onClick={handleSubmit}>Login</Button>
+
+            <Label className='text-sm font-medium mt-4'>Email</Label>
+            <Input type='email' className='mt-1' placeholder='seuemail@email.com' {...register("email")}>
+                {errors.email && <>{errors.email.message}</>}
+            </Input>
+
+            <Label className='text-sm font-medium mt-4'>Senha</Label>
+            <Input type='password' className='mt-1' placeholder='Digite sua senha...' {...register("password")}>
+                {errors.password && <>{errors.password.message}</>}
+            </Input>
+
+            {loading ? (
+                <Loading />
+            ) : (
+                <Button className='mt-6' onClick={handleSubmit(onSubmit)} disabled={loading}>
+                    Login
+                </Button>
+            )}
+
             <Divider>Ou</Divider>
+
             <Signup></Signup>
         </div>
     );

@@ -34,12 +34,13 @@ export default function SignupForm() {
     const onSubmit = async (data: any) => {
         try {
             setLoading(true);
-            const signup = SignupDomain.create(data);
-            const result = await AccountGatewayHttp.signup(signup.getData());
-            if (result) {
-                notify("Usuário cadastrado com sucesso");
-                navigate("/login");
-            }
+            // const signup = SignupDomain.create(data);
+            // const result = await AccountGatewayHttp.signup(signup.getData());
+            // if (result) {
+            //     notify("Usuário cadastrado com sucesso");
+            //     navigate("/login");
+            // }
+            navigate("/login");
             setLoading(false);
         } catch (error: any) {
             setLoading(false);
@@ -55,22 +56,22 @@ export default function SignupForm() {
             </div>
 
             <Label className='text-sm font-medium'>Nome</Label>
-            <Input type='text' className='mt-1 mb-4' placeholder='Informe seu nome...' {...register("name")}>
+            <Input type='text' className='mt-1' placeholder='Informe seu nome...' {...register("name")}>
                 {errors.name && <>{errors.name.message}</>}
             </Input>
 
-            <Label className='text-sm font-medium'>Email</Label>
-            <Input type='email' className='mt-1 mb-4' placeholder='seuemail@email.com' {...register("email")}>
+            <Label className='text-sm font-medium mt-4'>Email</Label>
+            <Input type='email' className='mt-1' placeholder='seuemail@email.com' {...register("email")}>
                 {errors.email && <>{errors.email.message}</>}
             </Input>
 
-            <Label className='text-sm font-medium'>Senha</Label>
-            <Input type='password' className='mt-1 mb-4' placeholder='Digite sua senha...' {...register("password")}>
+            <Label className='text-sm font-medium mt-4'>Senha</Label>
+            <Input type='password' className='mt-1' placeholder='Digite sua senha...' {...register("password")}>
                 {errors.password && <>{errors.password.message}</>}
             </Input>
 
-            <Label className='text-sm font-medium'>Confirme sua senha</Label>
-            <Input type='password' className='mt-1 mb-4' placeholder='Confirme sua senha...' {...register("confirmPassword")}>
+            <Label className='text-sm font-medium mt-4'>Confirme sua senha</Label>
+            <Input type='password' className='mt-1' placeholder='Confirme sua senha...' {...register("confirmPassword")}>
                 {errors.confirmPassword && <>{errors.confirmPassword.message}</>}
             </Input>
 

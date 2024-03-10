@@ -1,5 +1,3 @@
-import Observable from "../../test/Observable";
-
 export default class SignupDomain {
     name = "";
     email = "";
