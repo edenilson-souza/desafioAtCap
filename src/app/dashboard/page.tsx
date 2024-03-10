@@ -1,7 +1,8 @@
 "use client";
-import Button from "@/components/basic/button";
 import useAuthentication from "@/hooks/useAuthentication";
-import Image from "next/image";
+import Container from "@/components/basic/container";
+import { Header } from "@/components/shared/header";
+import { Content, SideMenu } from "@/components/shared/sideMenu";
 
 export default function Dashboard() {
     const auth = useAuthentication();
@@ -12,12 +13,15 @@ export default function Dashboard() {
 
     return (
         <>
-            <Image src='/logo.svg' alt='Atos Capital Logo' width={72} height={16} />
-            <h1>My Homepage</h1>
-            <p>Welcome to my homepage!</p>
-            <Button className='w-96' onClick={() => auth.logout()}>
-                Logout
-            </Button>
+            <Container className='flex flex-row'>
+                <SideMenu />
+                <div className='flex flex-col w-full h-full'>
+                    <Header />
+                    <Content>
+                        <h1>Dashboard</h1>
+                    </Content>
+                </div>
+            </Container>
         </>
     );
 }
