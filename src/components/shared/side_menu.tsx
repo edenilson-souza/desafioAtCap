@@ -27,7 +27,7 @@ export function SideMenu() {
 function ButtonMenu({ children }: { children?: any }) {
     return (
         <div className='flex mx-2 relative'>
-            <Button className='w-full h-12 bg-[#E9E9E9] text-black font-semibold text-left items-center justify-start' onClick={navigateToDashboard}>
+            <Button className='w-full h-12 bg-[#E9E9E9] text-black font-semibold text-left items-center justify-start' onClick={() => navigateToDashboard()}>
                 {children}
             </Button>
         </div>
