@@ -32,7 +32,7 @@ export default function Dashboard() {
     return (
         <>
             <DashboardPage buttonOrClose={<NovoProdutoButton openCadastro={openCadastro} />}>
-                <ViewHeader totalCount={totalCount} />
+                <ViewHeaderDashboard totalCount={totalCount} />
                 <div className='flex flex-row justify-between my-10'>
                     <SearchInput />
                     <div className='text-xs font-[Poppins] text-gray-400 '>
@@ -58,7 +58,7 @@ function SearchInput() {
     );
 }
 
-export function ViewHeader({ totalCount }: { totalCount: number }) {
+function ViewHeaderDashboard({ totalCount }: { totalCount: number }) {
     return (
         <div className='flex flex-row justify-between p-1 items-center '>
             <h3 className='font-[Poppins] text-2xl font-extrabold my-2'>Seus cadastros</h3>
