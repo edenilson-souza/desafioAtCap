@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Loading from "@/app/components/basic/loading";
 import useAuthentication from "@/hooks/useAuthentication";
@@ -13,8 +14,6 @@ export default function Home() {
         } else {
             navigateToLogin();
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

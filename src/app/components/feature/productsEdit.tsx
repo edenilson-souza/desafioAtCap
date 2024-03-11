@@ -1,14 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { notify } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import SignupDomain from "@/domain/SignupDomain";
-import AccountGatewayHttp from "@/infra/gateway/AccountGatewayHttp";
-import { navigate, navigateToDashboard } from "@/lib/actions";
-
+import { navigateToDashboard } from "@/lib/actions";
 import Button from "@/app/components/basic/button";
 import Input from "@/app/components/basic/input";
 import Label from "@/app/components/basic/label";
@@ -65,7 +62,6 @@ export default function ProductsEdit({ id }: { id: number }) {
 
     useEffect(() => {
         getProduct();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

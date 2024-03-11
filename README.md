@@ -59,3 +59,5 @@ Isso deve funcionar corretamente. Se precisar de mais alguma coisa, estou por aq
 ![](https://raw.githubusercontent.com/edenilson-souza/desafioAtCap/main/images/pages/signup_page.png)
 ![](https://raw.githubusercontent.com/edenilson-souza/desafioAtCap/main/images/pages/dashboard_page.png)
 ![](https://raw.githubusercontent.com/edenilson-souza/desafioAtCap/main/images/pages/cadastro_page.png)
+![](https://raw.githubusercontent.com/edenilson-souza/desafioAtCap/main/images/pages/editar_page.png)
+![](https://raw.githubusercontent.com/edenilson-souza/desafioAtCap/main/images/pages/deletar_modal.png)

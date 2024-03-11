@@ -1,4 +1,5 @@
-import { base_url_api, notify } from "@/lib/utils";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { notify } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import DataTable from "@/app/components/basic/dataTable";
 import { Dialog, DialogTrigger, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/app/components/basic/dialog";
@@ -32,7 +33,6 @@ export default function ProductsList({ setTotalCount, lastUpdate }: { setTotalCo
 
     useEffect(() => {
         fetchProducts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

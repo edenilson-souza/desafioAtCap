@@ -16,8 +16,6 @@ const useAuthentication = () => {
             window.removeEventListener("load", checkAuthentication);
             clearInterval(interval);
         };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const checkAuthentication = (): boolean => {

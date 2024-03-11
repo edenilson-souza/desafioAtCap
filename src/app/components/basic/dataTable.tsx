@@ -1,12 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useEffect, useState } from "react";
-
-
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
-
-
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/app/components/basic/table";
 
 function DataTable({ data, columns }: any) {
