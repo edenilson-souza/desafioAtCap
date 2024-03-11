@@ -26,8 +26,8 @@ export function DashboardPage({ children, buttonOrClose }: any) {
 export function BemVindo() {
     return (
         <div>
-            <h1 className='font-[Poppins] text-3xl font-extrabold my-2'>Olá Usuário!</h1>
-            <h6 className='font-[Poppins] text-xs text-[#898989]'>Seja bem vindo!</h6>
+            <h1 className='font-[Poppins] text-4xl font-extrabold my-2'>Olá Usuário!</h1>
+            <h6 className='font-[Poppins] text-sm text-[#898989]'>Seja bem vindo!</h6>
         </div>
     );
 }

@@ -5,6 +5,7 @@ import { navigateToDashboard } from "@/lib/actions";
 import Container from "@/components/basic/container";
 import Loading from "@/components/basic/loading";
 import { DashboardPage } from "@/components/shared/dashboard";
+import ProductsCreate from "@/components/feature/productsCreate";
 
 export default function Dashboard() {
     const auth = useAuthentication();
@@ -26,9 +27,19 @@ export default function Dashboard() {
     return (
         <>
             <DashboardPage buttonOrClose={<Close onClick={closeCadastro}></Close>}>
-                <h1>2</h1>
+                <ViewHeader />
+                <ProductsCreate />
             </DashboardPage>
         </>
+    );
+}
+
+export function ViewHeader() {
+    return (
+        <div className='flex flex-row justify-between p-1 items-center '>
+            <h3 className='font-[Poppins] text-2xl font-extrabold my-2'>Cadastrar Produto</h3>
+            <div className=' flex w-48 h-16 px-4 text-sm font-[Poppins]  justify-around items-center rounded-xl'></div>
+        </div>
     );
 }
 

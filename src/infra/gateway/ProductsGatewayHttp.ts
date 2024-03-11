@@ -21,6 +21,31 @@ export class ProductsGatewayHttp implements ProductsGateway {
             handleErrors(error);
         }
     }
+
+    async createProduct(product: Product): Promise<void> {
+        try {
+            const token = `Bearer ${localStorage.getItem("token")}`;
+            const data = {
+                name: product.name,
+                cost: Number(product.cost),
+                quantity: Number(product.quantity),
+                locationId: Number(product.locationId),
+                familyId: Number(product.familyId)
+            };
+            await this.httpClient.post(`${this.baseUrl}/products`, data, { header: { Authorization: token } });
+        } catch (error: any) {
+            handleErrors(error);
+        }
+    }
+
+    async deleteProduct(id: number): Promise<void> {
+        try {
+            const token = `Bearer ${localStorage.getItem("token")}`;
+            await this.httpClient.delete(`${this.baseUrl}/products/${id}`, { header: { Authorization: token } });
+        } catch (error: any) {
+            handleErrors(error);
+        }
+    }
 }
 
 export default new ProductsGatewayHttp();

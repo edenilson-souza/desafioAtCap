@@ -48,9 +48,9 @@ function Opcoes({ id, onEdit, onDelete }: { id: string; onEdit: (id: string) => 
 
     const handleDelete = async () => {
         try {
-            // const response = await deleteAccount(id);
-            notify("Deletado com sucesso");
+            await ProductsGatewayHttp.deleteProduct(Number(id));
             onDelete();
+            notify("Deletado com sucesso");
             setShowConfirm(false);
         } catch (error: any) {
             notify(error.message, { type: "error" });

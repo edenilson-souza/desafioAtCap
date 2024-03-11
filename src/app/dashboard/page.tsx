@@ -32,7 +32,7 @@ export default function Dashboard() {
     return (
         <>
             <DashboardPage buttonOrClose={<NovoProdutoButton openCadastro={openCadastro} />}>
-                <ViewHeaderCadastrados totalCount={totalCount} />
+                <ViewHeader totalCount={totalCount} />
                 <div className='flex flex-row justify-between my-10'>
                     <SearchInput />
                     <div className='text-xs font-[Poppins] text-gray-400 '>
@@ -58,10 +58,10 @@ function SearchInput() {
     );
 }
 
-export function ViewHeaderCadastrados({ totalCount }: { totalCount: number }) {
+export function ViewHeader({ totalCount }: { totalCount: number }) {
     return (
         <div className='flex flex-row justify-between p-1 items-center '>
-            <h3 className='font-[Poppins] text-xl font-extrabold my-2'>Seus cadastros</h3>
+            <h3 className='font-[Poppins] text-2xl font-extrabold my-2'>Seus cadastros</h3>
             <div className=' flex w-48 h-16 px-4 text-sm font-[Poppins] bg-white justify-around items-center rounded-xl'>
                 <div className='text-black text-2xl font-[Poppins] font-extrabold'>
                     <div>{totalCount === 0 ? 0 : totalCount}</div>
