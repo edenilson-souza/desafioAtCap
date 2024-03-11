@@ -7,31 +7,6 @@ const useAuthentication = () => {
     const [token, setToken] = useState("");
 
     useEffect(() => {
-        const checkAuthentication = () => {
-            const token_ = localStorage.getItem("token");
-            if (token_ !== null) {
-                setToken(token_);
-            }
-            if (token_ && token_.length > 0) {
-                setAuthenticated(true);
-            } else {
-                setAuthenticated(false);
-                const url = window.location.pathname;
-                if (
-                    url !== "/" &&
-                    url !== "/login" &&
-                    url !== "/register" &&
-                    url !== "/forgot-password" &&
-                    url !== "/reset-password" &&
-                    url !== "/verify-email" &&
-                    url !== "/verify-email-sent"
-                ) {
-                    notify("Você precisa estar autenticado para acessar esta página", { type: "error", position: "bottom-center" });
-                }
-                navigate("/login");
-            }
-        };
-
         checkAuthentication();
 
         window.addEventListener("load", checkAuthentication);
@@ -44,6 +19,33 @@ const useAuthentication = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const checkAuthentication = (): boolean => {
+        const token_ = localStorage.getItem("token");
+        if (token_ !== null) {
+            setToken(token_);
+        }
+        if (token_ && token_.length > 0) {
+            setAuthenticated(true);
+            return true;
+        } else {
+            setAuthenticated(false);
+            const url = window.location.pathname;
+            if (
+                url !== "/" &&
+                url !== "/login" &&
+                url !== "/register" &&
+                url !== "/forgot-password" &&
+                url !== "/reset-password" &&
+                url !== "/verify-email" &&
+                url !== "/verify-email-sent"
+            ) {
+                notify("Você precisa estar autenticado para acessar esta página", { type: "error", position: "bottom-center" });
+            }
+            navigate("/login");
+            return false;
+        }
+    };
 
     const redirectTo = (path: string) => {
         navigate(path);
@@ -61,7 +63,7 @@ const useAuthentication = () => {
         navigate("/login");
     };
 
-    return { authenticated, redirectTo, login, logout, token };
+    return { authenticated, checkAuthentication, redirectTo, login, logout, token };
 };
 
 export default useAuthentication;

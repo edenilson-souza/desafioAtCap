@@ -1,18 +1,22 @@
 "use client";
 import Loading from "@/app/components/basic/loading";
 import useAuthentication from "@/hooks/useAuthentication";
+import { navigateToDashboard, navigateToLogin } from "@/lib/actions";
 import { useEffect } from "react";
 
 export default function Home() {
     const auth = useAuthentication();
 
     useEffect(() => {
-        if (auth.authenticated) {
-            auth.login("token");
+        if (auth.checkAuthentication()) {
+            navigateToDashboard();
         } else {
-            auth.redirectTo("/login");
+            navigateToLogin();
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
     return (
         <>
             <div className='flex w-full h-screen justify-center items-center'>
