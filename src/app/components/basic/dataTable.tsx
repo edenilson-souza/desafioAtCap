@@ -1,17 +1,56 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+import { useEffect, useState } from "react";
+
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+
+
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/app/components/basic/table";
-import { useState } from "react";
 
 function DataTable({ data, columns }: any) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
 
     const onPageChange = (page: number) => {
         setCurrentPage(page);
+        updateUrl(pageSize, page);
     };
 
     const onPageSizeChange = (size: number) => {
         setPageSize(size);
         setCurrentPage(1);
+        updateUrl(size, currentPage);
+    };
+
+    useEffect(() => {
+        const page = searchParams.get("currentPage");
+        const size = searchParams.get("pageSize");
+        if (page) {
+            setCurrentPage(Number(page));
+        }
+        if (size) {
+            setPageSize(Number(size));
+        }
+        const newParams = new URLSearchParams();
+        if (!page || !size) {
+            if (!page) newParams.set("currentPage", currentPage.toString());
+            if (!size) newParams.set("pageSize", pageSize.toString());
+        }
+        updateUrl(pageSize, currentPage);
+    }, []);
+
+    const updateUrl = (pageSize: number, currentPage: number) => {
+        const newParams = new URLSearchParams();
+        newParams.set("currentPage", currentPage.toString());
+        newParams.set("pageSize", pageSize.toString());
+        const url = `${pathname}?${newParams.toString()}`;
+        router.push(url);
     };
 
     const renderRows = () => {
