@@ -4,15 +4,30 @@ import { notify } from "@/lib/utils";
 
 const useAuthentication = () => {
     const [authenticated, setAuthenticated] = useState(false);
+    const [token, setToken] = useState("");
 
     useEffect(() => {
         const checkAuthentication = () => {
-            const token = localStorage.getItem("token");
-            if (token) {
+            const token_ = localStorage.getItem("token");
+            if (token_ !== null) {
+                setToken(token_);
+            }
+            if (token_ && token_.length > 0) {
                 setAuthenticated(true);
             } else {
                 setAuthenticated(false);
-                notify("Você precisa estar autenticado para acessar esta página", { type: "error", position: "bottom-center" });
+                const url = window.location.pathname;
+                if (
+                    url !== "/" &&
+                    url !== "/login" &&
+                    url !== "/register" &&
+                    url !== "/forgot-password" &&
+                    url !== "/reset-password" &&
+                    url !== "/verify-email" &&
+                    url !== "/verify-email-sent"
+                ) {
+                    notify("Você precisa estar autenticado para acessar esta página", { type: "error", position: "bottom-center" });
+                }
                 navigate("/login");
             }
         };
@@ -26,7 +41,13 @@ const useAuthentication = () => {
             window.removeEventListener("load", checkAuthentication);
             clearInterval(interval);
         };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const redirectTo = (path: string) => {
+        navigate(path);
+    };
 
     const login = (token: string, path?: string) => {
         localStorage.setItem("token", token);
@@ -40,7 +61,7 @@ const useAuthentication = () => {
         navigate("/login");
     };
 
-    return { authenticated, login, logout };
+    return { authenticated, redirectTo, login, logout, token };
 };
 
 export default useAuthentication;

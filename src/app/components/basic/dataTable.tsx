@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/basic/table";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/app/components/basic/table";
 import { useState } from "react";
 
 function DataTable({ data, columns }: any) {

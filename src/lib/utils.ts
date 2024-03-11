@@ -20,6 +20,7 @@ export function handleErrors(error: any): never {
     if (error.response) {
         MessageError(error, 401, "Incorrect email or password", "Email e/ou senha incorretos");
     }
+    console.error(error);
     throw new Error("Algo deu errado, tente novamente mais tarde");
 }
 

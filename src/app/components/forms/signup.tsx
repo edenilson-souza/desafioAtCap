@@ -9,10 +9,10 @@ import SignupDomain from "@/domain/SignupDomain";
 import AccountGatewayHttp from "@/infra/gateway/AccountGatewayHttp";
 import { navigate } from "@/lib/actions";
 
-import Button from "@/components/basic/button";
-import Input from "@/components/basic/input";
-import Label from "@/components/basic/label";
-import Loading from "@/components/basic/loading";
+import Button from "@/app/components/basic/button";
+import Input from "@/app/components/basic/input";
+import Label from "@/app/components/basic/label";
+import Loading from "@/app/components/basic/loading";
 
 const schema = z.object({
     name: z.string().min(3, "Digite no mínimo 3 caracteres").max(50),

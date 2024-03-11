@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { notify } from "@/lib/utils";
@@ -9,10 +9,10 @@ import SignupDomain from "@/domain/SignupDomain";
 import AccountGatewayHttp from "@/infra/gateway/AccountGatewayHttp";
 import { navigate, navigateToDashboard } from "@/lib/actions";
 
-import Button from "@/components/basic/button";
-import Input from "@/components/basic/input";
-import Label from "@/components/basic/label";
-import Loading from "@/components/basic/loading";
+import Button from "@/app/components/basic/button";
+import Input from "@/app/components/basic/input";
+import Label from "@/app/components/basic/label";
+import Loading from "@/app/components/basic/loading";
 import ProductsGatewayHttp from "@/infra/gateway/ProductsGatewayHttp";
 
 const schema = z.object({
@@ -23,22 +23,39 @@ const schema = z.object({
     familyId: z.string().min(1, "Digite no mínimo 1 caracteres").max(100)
 });
 
-export default function ProductsCreate() {
+export default function ProductsEdit({ id }: { id: number }) {
     const [loading, setLoading] = useState(false);
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors }
     } = useForm({
         resolver: zodResolver(schema)
     });
 
+    const getProduct = async () => {
+        try {
+            setLoading(true);
+            const products = await ProductsGatewayHttp.getProduct(id);
+            setValue("name", products.name.toString());
+            setValue("cost", products.cost.toString());
+            setValue("quantity", products.quantity.toString());
+            setValue("locationId", products.locationId.toString());
+            setValue("familyId", products.familyId.toString());
+            setLoading(false);
+        } catch (error: any) {
+            setLoading(false);
+            notify(error.message, { type: "error", position: "bottom-center" });
+        }
+    };
+
     const onSubmit = async (data: any) => {
         try {
             setLoading(true);
-            await ProductsGatewayHttp.createProduct(data);
-            notify("Produto cadastrado com sucesso", { type: "success", position: "bottom-center" });
-            setLoading(true);
+            await ProductsGatewayHttp.updateProduct(id, data);
+            notify("Produto editado com sucesso", { type: "success", position: "bottom-center" });
+            setLoading(false);
             navigateToDashboard();
         } catch (error: any) {
             setLoading(false);
@@ -46,13 +63,18 @@ export default function ProductsCreate() {
         }
     };
 
+    useEffect(() => {
+        getProduct();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div>
             <div className='w-[300px] sm:w-[70%] h-full bg-white rounded-xl p-4'>
                 <div className='flex flex-col '>
                     <Label className='text-lg font-["Poppins"]  font-bold'>Informações sobre o produto</Label>
                     <Label className='text-sm font-["Poppins"] mb-8 text-[#90A3BF]'>
-                        Favor inserir as informações relativas ao produto que deseja cadastrar.
+                        Favor modificar as informações relativas ao produto que deseja alterar.
                     </Label>
                 </div>
 
@@ -119,7 +141,7 @@ export default function ProductsCreate() {
                 <div className='flex flex-row w-[100%] justify-between'>
                     <div className='flex flex-col w-full  justify-center mx-4 mt-4  '>
                         <Label className='text-lg font-["Poppins"]  font-bold'>Confirmação</Label>
-                        <Label className='text-xs font-["Poppins"] mb-8 text-[#90A3BF]'>Confira os dados informados antes de cadastrar o produto</Label>
+                        <Label className='text-xs font-["Poppins"] mb-8 text-[#90A3BF]'>Confira os dados informados antes de editar o produto</Label>
                     </div>
                     <div className='flex h-[100%] mx-4'>
                         {loading ? (
@@ -129,7 +151,7 @@ export default function ProductsCreate() {
                         ) : (
                             <div className='flex h-[100%] ml-auto mt-4 justify-center '>
                                 <Button className='w-28 h-16' onClick={handleSubmit(onSubmit)} disabled={loading}>
-                                    Cadastrar
+                                    Editar
                                 </Button>
                             </div>
                         )}

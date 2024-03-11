@@ -1,5 +1,5 @@
-import SignupForm from "@/components/forms/signup";
-import { ContainerAuth } from "@/components/shared/container";
+import SignupForm from "@/app/components/forms/signup";
+import { ContainerAuth } from "@/app/components/shared/container";
 
 export default function Login() {
     return (

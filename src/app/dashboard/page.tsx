@@ -2,11 +2,11 @@
 "use client";
 import useAuthentication from "@/hooks/useAuthentication";
 import { navigateToCadastro } from "@/lib/actions";
-import Container from "@/components/basic/container";
-import Loading from "@/components/basic/loading";
-import { DashboardPage } from "@/components/shared/dashboard";
-import Button from "@/components/basic/button";
-import ProductsList from "@/components/feature/productsList";
+import Container from "@/app/components/basic/container";
+import Loading from "@/app/components/basic/loading";
+import { DashboardPage } from "@/app/components/shared/dashboard";
+import Button from "@/app/components/basic/button";
+import ProductsList from "@/app/components/feature/productsList";
 import { useState } from "react";
 import Image from "next/image";
 

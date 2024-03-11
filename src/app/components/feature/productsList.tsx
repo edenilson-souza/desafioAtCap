@@ -1,16 +1,17 @@
 import { base_url_api, notify } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import DataTable from "@/components/basic/dataTable";
-import { Dialog, DialogTrigger, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/basic/dialog";
+import DataTable from "@/app/components/basic/dataTable";
+import { Dialog, DialogTrigger, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/app/components/basic/dialog";
 import { Product } from "@/infra/gateway/ProductsGateway";
-import Button from "@/components/basic/button";
+import Button from "@/app/components/basic/button";
 import ProductsGatewayHttp from "@/infra/gateway/ProductsGatewayHttp";
+import { navigate } from "@/lib/actions";
 
 export default function ProductsList({ setTotalCount, lastUpdate }: { setTotalCount: (total: number) => void; lastUpdate: (date: Date) => void }) {
     const [products, setProducts] = useState<Product[]>([]);
 
     const handleEdit = (id: string) => {
-        alert("Editar id " + id);
+        navigate(`/dashboard/cadastro/${id}`);
     };
 
     const columns = {
@@ -24,8 +25,6 @@ export default function ProductsList({ setTotalCount, lastUpdate }: { setTotalCo
 
     const fetchProducts = async () => {
         const data = await ProductsGatewayHttp.getProducts();
-
-        // const data = await response.json();
         setTotalCount(data.length);
         setProducts(data);
         lastUpdate(new Date());

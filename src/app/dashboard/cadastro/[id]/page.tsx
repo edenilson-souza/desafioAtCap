@@ -6,8 +6,9 @@ import Container from "@/app/components/basic/container";
 import Loading from "@/app/components/basic/loading";
 import { DashboardPage } from "@/app/components/shared/dashboard";
 import ProductsCreate from "@/app/components/feature/productsCreate";
+import ProductsEdit from "@/app/components/feature/productsEdit";
 
-export default function Dashboard() {
+export default function Dashboard({ params: { id } }: { params: { id: number } }) {
     const auth = useAuthentication();
 
     const closeCadastro = () => {
@@ -28,7 +29,7 @@ export default function Dashboard() {
         <>
             <DashboardPage buttonOrClose={<Close onClick={closeCadastro}></Close>}>
                 <ViewHeader />
-                <ProductsCreate />
+                <ProductsEdit id={id} />
             </DashboardPage>
         </>
     );
@@ -37,7 +38,7 @@ export default function Dashboard() {
 export function ViewHeader() {
     return (
         <div className='flex flex-row justify-between p-1 items-center '>
-            <h3 className='font-[Poppins] text-2xl font-extrabold my-2'>Cadastrar Produto</h3>
+            <h3 className='font-[Poppins] text-2xl font-extrabold my-2'>Editar Produto</h3>
             <div className=' flex w-48 h-16 px-4 text-sm font-[Poppins]  justify-around items-center rounded-xl'></div>
         </div>
     );
