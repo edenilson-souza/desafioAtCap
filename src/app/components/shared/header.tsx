@@ -1,9 +1,16 @@
+"use client";
 import useAuthentication from "@/hooks/useAuthentication";
 import { navigateToLogin } from "@/lib/actions";
 import Image from "next/image";
+import { useState } from "react";
 
 export function Header() {
     const auth = useAuthentication();
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
 
     const handleLogout = () => {
         auth.logout();
@@ -24,10 +31,17 @@ export function Header() {
                         <Image src='/notification.png' alt='Notification' className='w-7 h-7 rounded-full' width={150} height={150} />
                     </button>
                 </div>
-                <div className='flex items-center space-x-2' onClick={() => handleLogout()}>
+                <div className='flex items-center space-x-2' onClick={toggleDropdown}>
                     <Image src='/profile.png' alt='Profile' className='w-9 h-9 rounded-full' width={150} height={150} />
                     <span className='text-sm font-semibold mb-4'>Usuário</span>
                 </div>
+                {isOpen && (
+                    <div className='absolute right-0 mt-12 w-48 z-20 bg-white rounded-md shadow-lg py-1'>
+                        <button className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left' onClick={handleLogout}>
+                            Logout
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
