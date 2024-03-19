@@ -3,10 +3,10 @@ import { notify } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import DataTable from "@/app/components/basic/dataTable";
 import { Dialog, DialogTrigger, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/app/components/basic/dialog";
-import { Product } from "@/infra/gateway/ProductsGateway";
 import Button from "@/app/components/basic/button";
 import ProductsGatewayHttp from "@/infra/gateway/ProductsGatewayHttp";
 import { navigate } from "@/lib/actions";
+import { Product } from "@/domain/ProductEntity";
 
 export default function ProductsList({ setTotalCount, lastUpdate }: { setTotalCount: (total: number) => void; lastUpdate: (date: Date) => void }) {
     const [products, setProducts] = useState<Product[]>([]);
@@ -16,18 +16,25 @@ export default function ProductsList({ setTotalCount, lastUpdate }: { setTotalCo
     };
 
     const columns = {
-        name: "Descrição",
-        familyId: "Categoria",
-        quantity: "Quantidade",
-        locationId: "Cód. Produto",
-        cost: "Preço",
+        dsProduto: "Descrição",
+        dsCategoria: "Categoria",
+        dtCadastro: "Data Cadastro",
+        cdProduto: "Cód. Produto",
+        vlProduto: "Preço",
+        qtdProduto: "Quantidade",
         opcoes: (row: any) => <Opcoes id={row.id} onEdit={(id: string) => handleEdit(id)} onDelete={() => fetchProducts()} />
     };
 
     const fetchProducts = async () => {
         const data = await ProductsGatewayHttp.getProducts();
-        setTotalCount(data.length);
-        setProducts(data);
+        const products = data.map(product => {
+            return {
+                ...product,
+                dtCadastro: new Date(product.dtCadastro).toLocaleString()
+            };
+        });
+        setTotalCount(products.length);
+        setProducts(products);
         lastUpdate(new Date());
     };
 

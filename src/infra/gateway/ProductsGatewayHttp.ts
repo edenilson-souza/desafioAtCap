@@ -3,8 +3,9 @@
 import { base_url_api, handleErrors } from "@/lib/utils";
 import AxiosAdapter from "../http/AxiosAdapter";
 import HttpClient from "../http/HttpClient";
-import ProductsGateway, { Product } from "./ProductsGateway";
+import ProductsGateway from "./ProductsGateway";
 import { navigate, navigateToLogin } from "@/lib/actions";
+import ProductEntity, { Product } from "@/domain/ProductEntity";
 
 export class ProductsGatewayHttp implements ProductsGateway {
     httpClient: HttpClient = new AxiosAdapter();
@@ -38,34 +39,22 @@ export class ProductsGatewayHttp implements ProductsGateway {
         }
     }
 
-    async createProduct(product: Product): Promise<void> {
+    async createProduct(product: any): Promise<void> {
         try {
             const token = `Bearer ${localStorage.getItem("token")}`;
             VerifyToken(token);
-            const data = {
-                name: product.name,
-                cost: Number(product.cost),
-                quantity: Number(product.quantity),
-                locationId: Number(product.locationId),
-                familyId: Number(product.familyId)
-            };
+            const data = ProductEntity.create(product).getObj();
             await this.httpClient.post(`${this.baseUrl}/products`, data, { header: { Authorization: token } });
         } catch (error: any) {
             handleErrors(error);
         }
     }
 
-    async updateProduct(id: number, product: Product): Promise<void> {
+    async updateProduct(id: number, product: any): Promise<void> {
         try {
             const token = `Bearer ${localStorage.getItem("token")}`;
             VerifyToken(token);
-            const data = {
-                name: product.name,
-                cost: Number(product.cost),
-                quantity: Number(product.quantity),
-                locationId: Number(product.locationId),
-                familyId: Number(product.familyId)
-            };
+            const data = ProductEntity.update(product);
             await this.httpClient.patch(`${this.baseUrl}/products/${id}`, data, { header: { Authorization: token } });
         } catch (error: any) {
             handleErrors(error);

@@ -1,8 +1,15 @@
 import useAuthentication from "@/hooks/useAuthentication";
+import { navigateToLogin } from "@/lib/actions";
 import Image from "next/image";
 
 export function Header() {
     const auth = useAuthentication();
+
+    const handleLogout = () => {
+        auth.logout();
+        navigateToLogin();
+    };
+
     return (
         <div className='flex relative items-center justify-between w-full h-20 border-y-2 px-9'>
             <div className='flex items-center ml-10'>
@@ -17,7 +24,7 @@ export function Header() {
                         <Image src='/notification.png' alt='Notification' className='w-7 h-7 rounded-full' width={150} height={150} />
                     </button>
                 </div>
-                <div className='flex items-center space-x-2' onClick={() => auth.logout()}>
+                <div className='flex items-center space-x-2' onClick={() => handleLogout()}>
                     <Image src='/profile.png' alt='Profile' className='w-9 h-9 rounded-full' width={150} height={150} />
                     <span className='text-sm font-semibold mb-4'>Usuário</span>
                 </div>

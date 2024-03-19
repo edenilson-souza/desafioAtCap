@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { navigate } from "@/lib/actions";
+import { navigate, navigateToLogin } from "@/lib/actions";
 import { notify } from "@/lib/utils";
 
 const useAuthentication = () => {
@@ -29,18 +29,11 @@ const useAuthentication = () => {
         } else {
             setAuthenticated(false);
             const url = window.location.pathname;
-            if (
-                url !== "/" &&
-                url !== "/login" &&
-                url !== "/register" &&
-                url !== "/forgot-password" &&
-                url !== "/reset-password" &&
-                url !== "/verify-email" &&
-                url !== "/verify-email-sent"
-            ) {
+            const check = checkURL(url);
+            if (!check) {
                 notify("Você precisa estar autenticado para acessar esta página", { type: "error", position: "bottom-center" });
+                navigateToLogin();
             }
-            navigate("/login");
             return false;
         }
     };
@@ -52,16 +45,20 @@ const useAuthentication = () => {
     const login = (token: string, path?: string) => {
         localStorage.setItem("token", token);
         setAuthenticated(true);
-        navigate(path ?? "/dashboard");
     };
 
     const logout = () => {
         localStorage.removeItem("token");
         setAuthenticated(false);
-        navigate("/login");
     };
 
     return { authenticated, checkAuthentication, redirectTo, login, logout, token };
 };
+
+function checkURL(url: string) {
+    return public_urls.includes(url);
+}
+
+const public_urls = ["/", "/login", "/signup"];
 
 export default useAuthentication;

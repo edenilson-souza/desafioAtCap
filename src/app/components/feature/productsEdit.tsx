@@ -11,14 +11,7 @@ import Input from "@/app/components/basic/input";
 import Label from "@/app/components/basic/label";
 import Loading from "@/app/components/basic/loading";
 import ProductsGatewayHttp from "@/infra/gateway/ProductsGatewayHttp";
-
-const schema = z.object({
-    name: z.string().min(1, "Digite no mínimo 1 caracteres").max(100),
-    cost: z.string().min(1, "Digite no mínimo 1 caracteres").max(100),
-    quantity: z.string().min(1, "Digite no mínimo 1 caracteres").max(100),
-    locationId: z.string().min(1, "Digite no mínimo 1 caracteres").max(100),
-    familyId: z.string().min(1, "Digite no mínimo 1 caracteres").max(100)
-});
+import { product_schema } from "@/domain/ProductEntity";
 
 export default function ProductsEdit({ id }: { id: number }) {
     const [loading, setLoading] = useState(false);
@@ -28,18 +21,19 @@ export default function ProductsEdit({ id }: { id: number }) {
         setValue,
         formState: { errors }
     } = useForm({
-        resolver: zodResolver(schema)
+        resolver: zodResolver(product_schema)
     });
 
     const getProduct = async () => {
         try {
             setLoading(true);
             const products = await ProductsGatewayHttp.getProduct(id);
-            setValue("name", products.name.toString());
-            setValue("cost", products.cost.toString());
-            setValue("quantity", products.quantity.toString());
-            setValue("locationId", products.locationId.toString());
-            setValue("familyId", products.familyId.toString());
+            setValue("dsProduto", products.dsProduto.toString());
+            setValue("dsCategoria", products.dsCategoria.toString());
+            setValue("cdProduto", products.cdProduto.toString().toUpperCase());
+            setValue("vlProduto", products.vlProduto.toString());
+            setValue("qtdProduto", products.qtdProduto.toString());
+            setValue("dtCadastro", products.dtCadastro.toString());
             setLoading(false);
         } catch (error: any) {
             setLoading(false);
@@ -81,9 +75,9 @@ export default function ProductsEdit({ id }: { id: number }) {
                             type='text'
                             className='mt-1 placeholder-[#90A3BF] h-14 border-0 border-none'
                             placeholder='Descrição do produto'
-                            {...register("name")}
+                            {...register("dsProduto")}
                         >
-                            {errors.name && <>{errors.name.message}</>}
+                            {errors.dsProduto && <>{errors.dsProduto.message}</>}
                         </Input>
 
                         <Label className='text-sm font-medium mt-4'>Categoria</Label>
@@ -91,9 +85,9 @@ export default function ProductsEdit({ id }: { id: number }) {
                             type='text'
                             className='mt-1 placeholder-[#90A3BF] h-14 border-0 border-none'
                             placeholder='Categoria do produto'
-                            {...register("familyId")}
+                            {...register("dsCategoria")}
                         >
-                            {errors.familyId && <>{errors.familyId.message}</>}
+                            {errors.dsCategoria && <>{errors.dsCategoria.message}</>}
                         </Input>
                     </div>
 
@@ -103,9 +97,9 @@ export default function ProductsEdit({ id }: { id: number }) {
                             type='text'
                             className='mt-1 placeholder-[#90A3BF] h-14 border-0 border-none'
                             placeholder='Código do produto'
-                            {...register("locationId")}
+                            {...register("cdProduto")}
                         >
-                            {errors.locationId && <>{errors.locationId.message}</>}
+                            {errors.cdProduto && <>{errors.cdProduto.message}</>}
                         </Input>
 
                         <Label className='text-sm font-medium mt-4'>Valor</Label>
@@ -113,9 +107,9 @@ export default function ProductsEdit({ id }: { id: number }) {
                             type='text'
                             className='mt-1 placeholder-[#90A3BF] h-14 border-0 border-none'
                             placeholder='Valor do produto'
-                            {...register("cost")}
+                            {...register("vlProduto")}
                         >
-                            {errors.cost && <>{errors.cost.message}</>}
+                            {errors.vlProduto && <>{errors.vlProduto.message}</>}
                         </Input>
                     </div>
 
@@ -124,10 +118,10 @@ export default function ProductsEdit({ id }: { id: number }) {
                         <Input
                             type='text'
                             className='mt-1 placeholder-[#90A3BF] h-14 border-0 border-none'
-                            placeholder='Quantidade do produto'
-                            {...register("quantity")}
+                            placeholder='Quantidade'
+                            {...register("qtdProduto")}
                         >
-                            {errors.quantity && <>{errors.quantity.message}</>}
+                            {errors.qtdProduto && <>{errors.qtdProduto.message}</>}
                         </Input>
                     </div>
                 </div>
